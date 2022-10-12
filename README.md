@@ -22,3 +22,4 @@ DescedingSortWordsByFrequency
 GenerateWordFrequencyGameResult
 ```
 5. Remove useless comments
+6. Delete the special logic for only 1 word case because the logic can handle this case

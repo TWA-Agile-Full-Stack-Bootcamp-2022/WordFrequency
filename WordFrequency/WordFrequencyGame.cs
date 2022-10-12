@@ -8,20 +8,13 @@ namespace WordFrequency
     {
         public string GetResult(string inputStr)
         {
-            if (Regex.Split(inputStr, @"\s+").Length == 1)
-            {
-                return inputStr + " 1";
-            }
-            else
-            {
-                var inputWordList = ConvertInputStringToWordList(inputStr);
+            var inputWordList = ConvertInputStringToWordList(inputStr);
 
-                var wordListWithoutDuplicate = DeduplicateWords(inputWordList);
+            var wordListWithoutDuplicate = DeduplicateWords(inputWordList);
 
-                var sortedWords = DescendingSortWordsByFrequency(wordListWithoutDuplicate);
+            var sortedWords = DescendingSortWordsByFrequency(wordListWithoutDuplicate);
 
-                return GenerateWordFrequencyGameResult(sortedWords);
-            }
+            return GenerateWordFrequencyGameResult(sortedWords);
         }
 
         private static string GenerateWordFrequencyGameResult(List<FrequencyWord> wordListWithoutDuplicate)
