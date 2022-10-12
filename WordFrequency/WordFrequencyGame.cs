@@ -13,34 +13,25 @@ namespace WordFrequency
             {
                 return inputStr + " 1";
             }
-            else
-            {
-                //split the input string with 1 to n pieces of spaces
-                var inputWords = SplitInputStringToWords(inputStr);
 
-                //get the map for the next step of sizing the same word
-                List<Input> words = CountWords(inputWords);
+            //split the input string with 1 to n pieces of spaces
+            var inputWords = SplitInputStringToWords(inputStr);
 
-                words.Sort((w1, w2) => w2.WordCount - w1.WordCount);
+            //get the map for the next step of sizing the same word
+            List<Input> words = CountWords(inputWords);
 
-                List<string> strList = words.Select(w => w.Value + " " + w.WordCount).ToList<string>();
+            words.Sort((w1, w2) => w2.WordCount - w1.WordCount);
 
-                return string.Join("\n", strList.ToArray());
-            }
+            List<string> strList = words.Select(w => w.Value + " " + w.WordCount).ToList<string>();
+
+            return string.Join("\n", strList.ToArray());
         }
 
         private List<Input> CountWords(List<Input> inputList)
         {
-            Dictionary<string, List<Input>> map = GetListMap(inputList);
-
-            List<Input> list = new List<Input>();
-            foreach (var entry in map)
-            {
-                Input input = new Input(entry.Key, entry.Value.Count);
-                list.Add(input);
-            }
-
-            return list;
+            return GetListMap(inputList).ToList()
+                .Select(entry => new Input(entry.Key, entry.Value.Count))
+                .ToList();
         }
 
         private static List<Input> SplitInputStringToWords(string inputStr)
