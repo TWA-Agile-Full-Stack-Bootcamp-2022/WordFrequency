@@ -20,19 +20,29 @@ namespace WordFrequency
                 //get the map for the next step of sizing the same word
                 var wordListWithoutDuplicate = DeduplicateWords(inputWordList);
 
-                wordListWithoutDuplicate.Sort((w1, w2) => w2.WordCount - w1.WordCount);
+                var sortedWords = DescendingSortWordsByFrequency(wordListWithoutDuplicate);
 
-                List<string> wordFrequencyGameOutputs = new List<string>();
-
-                //stringJoiner joiner = new stringJoiner("\n");
-                foreach (FrequencyWord w in wordListWithoutDuplicate)
-                {
-                    string frequencyWordOutput = w.Word + " " + w.WordCount;
-                    wordFrequencyGameOutputs.Add(frequencyWordOutput);
-                }
-
-                return string.Join("\n", wordFrequencyGameOutputs.ToArray());
+                return GenerateWordFrequencyGameResult(sortedWords);
             }
+        }
+
+        private static string GenerateWordFrequencyGameResult(List<FrequencyWord> wordListWithoutDuplicate)
+        {
+            List<string> wordFrequencyGameOutputs = new List<string>();
+
+            foreach (FrequencyWord w in wordListWithoutDuplicate)
+            {
+                string frequencyWordOutput = w.Word + " " + w.WordCount;
+                wordFrequencyGameOutputs.Add(frequencyWordOutput);
+            }
+
+            return string.Join("\n", wordFrequencyGameOutputs.ToArray());
+        }
+
+        private static List<FrequencyWord> DescendingSortWordsByFrequency(List<FrequencyWord> wordListWithoutDuplicate)
+        {
+            wordListWithoutDuplicate.Sort((w1, w2) => w2.WordCount - w1.WordCount);
+            return wordListWithoutDuplicate;
         }
 
         private List<FrequencyWord> DeduplicateWords(List<FrequencyWord> inputWordList)

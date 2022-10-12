@@ -16,3 +16,8 @@ DeduplicateWords
 ```
 inputWordList = wordListWithoutDuplicate;
 ```
+4. Extract meaningful methods to reduce the size of the GetResult function
+```
+DescedingSortWordsByFrequency
+GenerateWordFrequencyGameResult
+```
