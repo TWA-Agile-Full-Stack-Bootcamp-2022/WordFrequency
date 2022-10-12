@@ -9,22 +9,24 @@ namespace WordFrequency
     {
         public string GetResult(string inputStr)
         {
-            if (Regex.Split(inputStr, @"\s+").Length == 1)
+            var inputStrArr = SplitInputStrings(inputStr);
+            if (inputStrArr.Length == 1)
             {
                 return inputStr + " 1";
             }
 
-            //split the input string with 1 to n pieces of spaces
-            var inputWords = SplitInputStringToWords(inputStr);
-
-            //get the map for the next step of sizing the same word
+            var inputWords = SplitInputStringToWords(inputStrArr);
             List<Input> words = CountWords(inputWords);
-
             words.Sort((w1, w2) => w2.WordCount - w1.WordCount);
 
-            List<string> strList = words.Select(w => w.Value + " " + w.WordCount).ToList<string>();
+            List<string> strList = words.Select(w => w.Value + " " + w.WordCount).ToList();
 
             return string.Join("\n", strList.ToArray());
+        }
+
+        private static string[] SplitInputStrings(string inputStr)
+        {
+            return Regex.Split(inputStr, @"\s+");
         }
 
         private List<Input> CountWords(List<Input> inputList)
@@ -34,10 +36,9 @@ namespace WordFrequency
                 .ToList();
         }
 
-        private static List<Input> SplitInputStringToWords(string inputStr)
+        private static List<Input> SplitInputStringToWords(string[] inputStrArr)
         {
-            string[] arr = Regex.Split(inputStr, @"\s+");
-            return arr.Select(w => new Input(w, 1)).ToList<Input>();
+            return inputStrArr.Select(w => new Input(w, 1)).ToList<Input>();
         }
 
         private Dictionary<string, List<Input>> GetListMap(List<Input> inputList)
