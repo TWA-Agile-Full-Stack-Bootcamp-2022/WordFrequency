@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace WordFrequency
@@ -15,33 +16,31 @@ namespace WordFrequency
             else
             {
                 //split the input string with 1 to n pieces of spaces
-                var inputList = SplitInputStringToWords(inputStr);
+                var inputWords = SplitInputStringToWords(inputStr);
 
                 //get the map for the next step of sizing the same word
-                Dictionary<string, List<Input>> map = GetListMap(inputList);
+                List<Input> words = CountWords(inputWords);
 
-                List<Input> list = new List<Input>();
-                foreach (var entry in map)
-                {
-                    Input input = new Input(entry.Key, entry.Value.Count);
-                    list.Add(input);
-                }
+                words.Sort((w1, w2) => w2.WordCount - w1.WordCount);
 
-                inputList = list;
-
-                inputList.Sort((w1, w2) => w2.WordCount - w1.WordCount);
-
-                List<string> strList = new List<string>();
-
-                //stringJoiner joiner = new stringJoiner("\n");
-                foreach (Input w in inputList)
-                {
-                    string s = w.Value + " " + w.WordCount;
-                    strList.Add(s);
-                }
+                List<string> strList = words.Select(w => w.Value + " " + w.WordCount).ToList<string>();
 
                 return string.Join("\n", strList.ToArray());
             }
+        }
+
+        private List<Input> CountWords(List<Input> inputList)
+        {
+            Dictionary<string, List<Input>> map = GetListMap(inputList);
+
+            List<Input> list = new List<Input>();
+            foreach (var entry in map)
+            {
+                Input input = new Input(entry.Key, entry.Value.Count);
+                list.Add(input);
+            }
+
+            return list;
         }
 
         private static List<Input> SplitInputStringToWords(string inputStr)
