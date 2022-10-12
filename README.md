@@ -23,3 +23,7 @@ GenerateWordFrequencyGameResult
 ```
 5. Remove useless comments
 6. Delete the special logic for only 1 word case because the logic can handle this case
+7. Replace the statement of FrequencyWord to member function. And refactor based on IDE suggestion
+```
+word.Word + " " + word.count => word.ToString()
+```

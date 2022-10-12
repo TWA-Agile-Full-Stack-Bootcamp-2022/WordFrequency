@@ -11,14 +11,13 @@
             this.count = count;
         }
 
-        public string Word
-        {
-            get { return this.word; }
-        }
+        public string Word => this.word;
 
-        public int WordCount
+        public int WordCount => this.count;
+
+        public override string ToString()
         {
-            get { return this.count; }
+            return $"{word} {count}";
         }
     }
 }

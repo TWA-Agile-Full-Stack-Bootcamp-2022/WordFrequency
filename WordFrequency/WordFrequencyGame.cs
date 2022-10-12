@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace WordFrequency
@@ -17,20 +18,12 @@ namespace WordFrequency
             return GenerateWordFrequencyGameResult(sortedWords);
         }
 
-        private static string GenerateWordFrequencyGameResult(List<FrequencyWord> wordListWithoutDuplicate)
+        private string GenerateWordFrequencyGameResult(List<FrequencyWord> wordListWithoutDuplicate)
         {
-            List<string> wordFrequencyGameOutputs = new List<string>();
-
-            foreach (FrequencyWord w in wordListWithoutDuplicate)
-            {
-                string frequencyWordOutput = w.Word + " " + w.WordCount;
-                wordFrequencyGameOutputs.Add(frequencyWordOutput);
-            }
-
-            return string.Join("\n", wordFrequencyGameOutputs.ToArray());
+            return string.Join("\n", wordListWithoutDuplicate.Select(word => word.ToString()).ToArray());
         }
 
-        private static List<FrequencyWord> DescendingSortWordsByFrequency(List<FrequencyWord> wordListWithoutDuplicate)
+        private List<FrequencyWord> DescendingSortWordsByFrequency(List<FrequencyWord> wordListWithoutDuplicate)
         {
             wordListWithoutDuplicate.Sort((w1, w2) => w2.WordCount - w1.WordCount);
             return wordListWithoutDuplicate;
@@ -50,7 +43,7 @@ namespace WordFrequency
             return wordListWithoutDuplicate;
         }
 
-        private static List<FrequencyWord> ConvertInputStringToWordList(string inputStr)
+        private List<FrequencyWord> ConvertInputStringToWordList(string inputStr)
         {
             string[] inputWords = Regex.Split(inputStr, @"\s+");
 
