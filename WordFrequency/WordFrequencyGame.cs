@@ -20,19 +20,28 @@ namespace WordFrequency
                 var inputList = GetInputList(arr);
 
                 //get the map for the next step of sizing the same word
-                var map = GetListMap(inputList);
+                var map = GroupByInputValue(inputList);
 
-                var noDuplicateInputList = GetNoDuplicateInputs(map);
+                var noDuplicateInputList = NoDuplicateInputList(map);
 
-                noDuplicateInputList.Sort((w1, w2) => w2.WordCount - w1.WordCount);
-
-                var strList = FromatOutput(noDuplicateInputList);
-
-                return string.Join("\n", strList.ToArray());
+                return string.Join("\n", FormatOutput(noDuplicateInputList).ToArray());
             }
         }
 
-        private static List<string> FromatOutput(List<Input> noDuplicateInputList)
+        private static List<Input> NoDuplicateInputList(Dictionary<string, List<Input>> map)
+        {
+            List<Input> noDuplicateInputList = new List<Input>();
+            foreach (var entry in map)
+            {
+                Input input = new Input(entry.Key, entry.Value.Count);
+                noDuplicateInputList.Add(input);
+            }
+
+            noDuplicateInputList.Sort((w1, w2) => w2.WordCount - w1.WordCount);
+            return noDuplicateInputList;
+        }
+
+        private static List<string> FormatOutput(List<Input> noDuplicateInputList)
         {
             List<string> strList = new List<string>();
 
@@ -44,18 +53,6 @@ namespace WordFrequency
             }
 
             return strList;
-        }
-
-        private static List<Input> GetNoDuplicateInputs(Dictionary<string, List<Input>> map)
-        {
-            List<Input> list = new List<Input>();
-            foreach (var entry in map)
-            {
-                Input input = new Input(entry.Key, entry.Value.Count);
-                list.Add(input);
-            }
-
-            return list;
         }
 
         private static List<Input> GetInputList(string[] arr)
@@ -70,7 +67,7 @@ namespace WordFrequency
             return inputList;
         }
 
-        private Dictionary<string, List<Input>> GetListMap(List<Input> inputList)
+        private Dictionary<string, List<Input>> GroupByInputValue(List<Input> inputList)
         {
             Dictionary<string, List<Input>> map = new Dictionary<string, List<Input>>();
             foreach (var input in inputList)
