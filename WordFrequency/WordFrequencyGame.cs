@@ -31,16 +31,9 @@ namespace WordFrequency
 
         private List<FrequencyWord> DeduplicateWords(List<FrequencyWord> inputWordList)
         {
-            Dictionary<string, List<FrequencyWord>> wordMap = GetListMap(inputWordList);
-
-            List<FrequencyWord> wordListWithoutDuplicate = new List<FrequencyWord>();
-            foreach (var entry in wordMap)
-            {
-                FrequencyWord frequencyWord = new FrequencyWord(entry.Key, entry.Value.Count);
-                wordListWithoutDuplicate.Add(frequencyWord);
-            }
-
-            return wordListWithoutDuplicate;
+            return inputWordList.GroupBy(word => word.Word)
+                .Select(group => new FrequencyWord(group.Key, group.Sum(word => word.WordCount)))
+                .ToList();
         }
 
         private List<FrequencyWord> ConvertInputStringToWordList(string inputStr)
@@ -55,26 +48,6 @@ namespace WordFrequency
             }
 
             return inputWordList;
-        }
-
-        private Dictionary<string, List<FrequencyWord>> GetListMap(List<FrequencyWord> inputWordList)
-        {
-            Dictionary<string, List<FrequencyWord>> wordMap = new Dictionary<string, List<FrequencyWord>>();
-            foreach (var inputWord in inputWordList)
-            {
-                if (!wordMap.ContainsKey(inputWord.Word))
-                {
-                    List<FrequencyWord> sameWordList = new List<FrequencyWord>();
-                    sameWordList.Add(inputWord);
-                    wordMap.Add(inputWord.Word, sameWordList);
-                }
-                else
-                {
-                    wordMap[inputWord.Word].Add(inputWord);
-                }
-            }
-
-            return wordMap;
         }
     }
 }
