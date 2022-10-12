@@ -19,9 +19,12 @@ namespace WordFrequency
             List<Input> words = CountWords(inputWords);
             words.Sort((w1, w2) => w2.WordCount - w1.WordCount);
 
-            List<string> strList = words.Select(w => w.Value + " " + w.WordCount).ToList();
+            return PrintWordsCount(words);
+        }
 
-            return string.Join("\n", strList.ToArray());
+        private static string PrintWordsCount(List<Input> words)
+        {
+            return string.Join("\n", words.Select(w => w.ToString()).ToList());
         }
 
         private static string[] SplitInputStrings(string inputStr)
@@ -43,23 +46,8 @@ namespace WordFrequency
 
         private Dictionary<string, List<Input>> GetListMap(List<Input> inputList)
         {
-            Dictionary<string, List<Input>> map = new Dictionary<string, List<Input>>();
-            foreach (var input in inputList)
-            {
-                //       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-                if (!map.ContainsKey(input.Value))
-                {
-                    List<Input> arr = new List<Input>();
-                    arr.Add(input);
-                    map.Add(input.Value, arr);
-                }
-                else
-                {
-                    map[input.Value].Add(input);
-                }
-            }
-
-            return map;
+            return inputList.GroupBy(input => input.Value)
+                .ToDictionary(g => g.Key, g => g.ToList());
         }
     }
 }
