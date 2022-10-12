@@ -46,14 +46,7 @@ namespace WordFrequency
         private static List<Input> SplitInputStringToWords(string inputStr)
         {
             string[] arr = Regex.Split(inputStr, @"\s+");
-
-            List<Input> inputList = new List<Input>();
-            foreach (var s in arr)
-            {
-                Input input = new Input(s, 1);
-                inputList.Add(input);
-            }
-
+            List<Input> inputList = arr.Select(w => new Input(w, 1)).ToList<Input>();
             return inputList;
         }
 
