@@ -11,9 +11,9 @@ namespace WordFrequency
         {
             var inputWordList = ConvertInputStringToWordList(inputStr);
 
-            var wordListWithoutDuplicate = DeduplicateWords(inputWordList);
+            var groupedWords = GroupFrequencyWords(inputWordList);
 
-            var sortedWords = DescendingSortWordsByFrequency(wordListWithoutDuplicate);
+            var sortedWords = DescendingSortWordsByFrequency(groupedWords);
 
             return GenerateWordFrequencyGameResult(sortedWords);
         }
@@ -29,7 +29,7 @@ namespace WordFrequency
             return wordListWithoutDuplicate;
         }
 
-        private List<FrequencyWord> DeduplicateWords(List<FrequencyWord> inputWordList)
+        private List<FrequencyWord> GroupFrequencyWords(List<FrequencyWord> inputWordList)
         {
             return inputWordList.GroupBy(word => word.Word)
                 .Select(group => new FrequencyWord(group.Key, group.Sum(word => word.WordCount)))
