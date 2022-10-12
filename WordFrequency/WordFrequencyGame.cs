@@ -7,6 +7,8 @@ namespace WordFrequency
 {
     public class WordFrequencyGame
     {
+        private const string SplitPattern = @"\s+";
+
         public string GetResult(string inputStr)
         {
             var inputStrArr = SplitInputStrings(inputStr);
@@ -15,10 +17,10 @@ namespace WordFrequency
                 return inputStr + " 1";
             }
 
-            var inputWords = SplitInputStringToWords(inputStrArr);
-            List<Input> words = CountWords(inputWords);
-            words.Sort((w1, w2) => w2.WordCount - w1.WordCount);
-
+            List<Input> words = inputStrArr.GroupBy(s => s)
+                .Select(g => new Input(g.Key, g.Count()))
+                .OrderByDescending(g => g.WordCount)
+                .ToList();
             return PrintWordsCount(words);
         }
 
@@ -29,25 +31,7 @@ namespace WordFrequency
 
         private static string[] SplitInputStrings(string inputStr)
         {
-            return Regex.Split(inputStr, @"\s+");
-        }
-
-        private List<Input> CountWords(List<Input> inputList)
-        {
-            return GetListMap(inputList).ToList()
-                .Select(entry => new Input(entry.Key, entry.Value.Count))
-                .ToList();
-        }
-
-        private static List<Input> SplitInputStringToWords(string[] inputStrArr)
-        {
-            return inputStrArr.Select(w => new Input(w, 1)).ToList<Input>();
-        }
-
-        private Dictionary<string, List<Input>> GetListMap(List<Input> inputList)
-        {
-            return inputList.GroupBy(input => input.Value)
-                .ToDictionary(g => g.Key, g => g.ToList());
+            return Regex.Split(inputStr, SplitPattern);
         }
     }
 }
