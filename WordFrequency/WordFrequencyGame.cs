@@ -20,14 +20,12 @@ namespace WordFrequency
                 //get the map for the next step of sizing the same word
                 var wordListWithoutDuplicate = DeduplicateWords(inputWordList);
 
-                inputWordList = wordListWithoutDuplicate;
-
-                inputWordList.Sort((w1, w2) => w2.WordCount - w1.WordCount);
+                wordListWithoutDuplicate.Sort((w1, w2) => w2.WordCount - w1.WordCount);
 
                 List<string> wordFrequencyGameOutputs = new List<string>();
 
                 //stringJoiner joiner = new stringJoiner("\n");
-                foreach (FrequencyWord w in inputWordList)
+                foreach (FrequencyWord w in wordListWithoutDuplicate)
                 {
                     string frequencyWordOutput = w.Word + " " + w.WordCount;
                     wordFrequencyGameOutputs.Add(frequencyWordOutput);

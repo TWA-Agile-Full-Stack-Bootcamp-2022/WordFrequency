@@ -12,3 +12,7 @@
 ConvertInputStringToWordList
 DeduplicateWords
 ```
+3. Remove useless data assignment, use `wordListWithoutDuplicate` in the next steps
+```
+inputWordList = wordListWithoutDuplicate;
+```
