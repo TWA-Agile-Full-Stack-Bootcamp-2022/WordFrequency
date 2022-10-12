@@ -6,3 +6,4 @@
 5. commit message should follow pattern like this: "refactor: [smell]: [technique]"
 
 ## Write down every refactoring step in here
+1. Rename meaningless variables

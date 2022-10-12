@@ -15,61 +15,61 @@ namespace WordFrequency
             else
             {
                 //split the input string with 1 to n pieces of spaces
-                string[] arr = Regex.Split(inputStr, @"\s+");
+                string[] inputWords = Regex.Split(inputStr, @"\s+");
 
-                List<Input> inputList = new List<Input>();
-                foreach (var s in arr)
+                List<FrequencyWord> inputWordList = new List<FrequencyWord>();
+                foreach (var word in inputWords)
                 {
-                    Input input = new Input(s, 1);
-                    inputList.Add(input);
+                    FrequencyWord frequencyWord = new FrequencyWord(word, 1);
+                    inputWordList.Add(frequencyWord);
                 }
 
                 //get the map for the next step of sizing the same word
-                Dictionary<string, List<Input>> map = GetListMap(inputList);
+                Dictionary<string, List<FrequencyWord>> wordMap = GetListMap(inputWordList);
 
-                List<Input> list = new List<Input>();
-                foreach (var entry in map)
+                List<FrequencyWord> wordListWithoutDuplicate = new List<FrequencyWord>();
+                foreach (var entry in wordMap)
                 {
-                    Input input = new Input(entry.Key, entry.Value.Count);
-                    list.Add(input);
+                    FrequencyWord frequencyWord = new FrequencyWord(entry.Key, entry.Value.Count);
+                    wordListWithoutDuplicate.Add(frequencyWord);
                 }
 
-                inputList = list;
+                inputWordList = wordListWithoutDuplicate;
 
-                inputList.Sort((w1, w2) => w2.WordCount - w1.WordCount);
+                inputWordList.Sort((w1, w2) => w2.WordCount - w1.WordCount);
 
-                List<string> strList = new List<string>();
+                List<string> wordFrequencyGameOutputs = new List<string>();
 
                 //stringJoiner joiner = new stringJoiner("\n");
-                foreach (Input w in inputList)
+                foreach (FrequencyWord w in inputWordList)
                 {
-                    string s = w.Value + " " + w.WordCount;
-                    strList.Add(s);
+                    string frequencyWordOutput = w.Word + " " + w.WordCount;
+                    wordFrequencyGameOutputs.Add(frequencyWordOutput);
                 }
 
-                return string.Join("\n", strList.ToArray());
+                return string.Join("\n", wordFrequencyGameOutputs.ToArray());
             }
         }
 
-        private Dictionary<string, List<Input>> GetListMap(List<Input> inputList)
+        private Dictionary<string, List<FrequencyWord>> GetListMap(List<FrequencyWord> inputWordList)
         {
-            Dictionary<string, List<Input>> map = new Dictionary<string, List<Input>>();
-            foreach (var input in inputList)
+            Dictionary<string, List<FrequencyWord>> wordMap = new Dictionary<string, List<FrequencyWord>>();
+            foreach (var inputWord in inputWordList)
             {
                 //       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-                if (!map.ContainsKey(input.Value))
+                if (!wordMap.ContainsKey(inputWord.Word))
                 {
-                    List<Input> arr = new List<Input>();
-                    arr.Add(input);
-                    map.Add(input.Value, arr);
+                    List<FrequencyWord> sameWordList = new List<FrequencyWord>();
+                    sameWordList.Add(inputWord);
+                    wordMap.Add(inputWord.Word, sameWordList);
                 }
                 else
                 {
-                    map[input.Value].Add(input);
+                    wordMap[inputWord.Word].Add(inputWord);
                 }
             }
 
-            return map;
+            return wordMap;
         }
     }
 }
