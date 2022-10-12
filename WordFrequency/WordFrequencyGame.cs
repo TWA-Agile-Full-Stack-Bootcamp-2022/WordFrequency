@@ -15,24 +15,10 @@ namespace WordFrequency
             else
             {
                 //split the input string with 1 to n pieces of spaces
-                string[] inputWords = Regex.Split(inputStr, @"\s+");
-
-                List<FrequencyWord> inputWordList = new List<FrequencyWord>();
-                foreach (var word in inputWords)
-                {
-                    FrequencyWord frequencyWord = new FrequencyWord(word, 1);
-                    inputWordList.Add(frequencyWord);
-                }
+                var inputWordList = ConvertInputStringToWordList(inputStr);
 
                 //get the map for the next step of sizing the same word
-                Dictionary<string, List<FrequencyWord>> wordMap = GetListMap(inputWordList);
-
-                List<FrequencyWord> wordListWithoutDuplicate = new List<FrequencyWord>();
-                foreach (var entry in wordMap)
-                {
-                    FrequencyWord frequencyWord = new FrequencyWord(entry.Key, entry.Value.Count);
-                    wordListWithoutDuplicate.Add(frequencyWord);
-                }
+                var wordListWithoutDuplicate = DeduplicateWords(inputWordList);
 
                 inputWordList = wordListWithoutDuplicate;
 
@@ -49,6 +35,34 @@ namespace WordFrequency
 
                 return string.Join("\n", wordFrequencyGameOutputs.ToArray());
             }
+        }
+
+        private List<FrequencyWord> DeduplicateWords(List<FrequencyWord> inputWordList)
+        {
+            Dictionary<string, List<FrequencyWord>> wordMap = GetListMap(inputWordList);
+
+            List<FrequencyWord> wordListWithoutDuplicate = new List<FrequencyWord>();
+            foreach (var entry in wordMap)
+            {
+                FrequencyWord frequencyWord = new FrequencyWord(entry.Key, entry.Value.Count);
+                wordListWithoutDuplicate.Add(frequencyWord);
+            }
+
+            return wordListWithoutDuplicate;
+        }
+
+        private static List<FrequencyWord> ConvertInputStringToWordList(string inputStr)
+        {
+            string[] inputWords = Regex.Split(inputStr, @"\s+");
+
+            List<FrequencyWord> inputWordList = new List<FrequencyWord>();
+            foreach (var word in inputWords)
+            {
+                FrequencyWord frequencyWord = new FrequencyWord(word, 1);
+                inputWordList.Add(frequencyWord);
+            }
+
+            return inputWordList;
         }
 
         private Dictionary<string, List<FrequencyWord>> GetListMap(List<FrequencyWord> inputWordList)

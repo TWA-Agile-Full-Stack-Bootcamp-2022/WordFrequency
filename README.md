@@ -7,3 +7,8 @@
 
 ## Write down every refactoring step in here
 1. Rename meaningless variables
+2. Extract meaningful methods to reduce the size of the GetResult function
+```
+ConvertInputStringToWordList
+DeduplicateWords
+```
