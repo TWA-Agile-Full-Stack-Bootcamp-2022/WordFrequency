@@ -28,3 +28,4 @@ GenerateWordFrequencyGameResult
 word.Word + " " + word.count => word.ToString()
 ```
 8. Deduplicate word list using List.GroupBy, delete GetListMap method
+9. Refactor foreach of function ConvertInputStringToWordList using LINQ-expression according to IDE suggestion

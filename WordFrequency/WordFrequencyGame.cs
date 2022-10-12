@@ -38,16 +38,9 @@ namespace WordFrequency
 
         private List<FrequencyWord> ConvertInputStringToWordList(string inputStr)
         {
-            string[] inputWords = Regex.Split(inputStr, @"\s+");
+            var inputWords = Regex.Split(inputStr, @"\s+");
 
-            List<FrequencyWord> inputWordList = new List<FrequencyWord>();
-            foreach (var word in inputWords)
-            {
-                FrequencyWord frequencyWord = new FrequencyWord(word, 1);
-                inputWordList.Add(frequencyWord);
-            }
-
-            return inputWordList;
+            return inputWords.Select(word => new FrequencyWord(word, 1)).ToList();
         }
     }
 }
