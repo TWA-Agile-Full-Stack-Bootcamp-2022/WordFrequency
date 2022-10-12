@@ -14,10 +14,8 @@ namespace WordFrequency
             }
             else
             {
-                //split the input string with 1 to n pieces of spaces
                 var inputWordList = ConvertInputStringToWordList(inputStr);
 
-                //get the map for the next step of sizing the same word
                 var wordListWithoutDuplicate = DeduplicateWords(inputWordList);
 
                 var sortedWords = DescendingSortWordsByFrequency(wordListWithoutDuplicate);
@@ -78,7 +76,6 @@ namespace WordFrequency
             Dictionary<string, List<FrequencyWord>> wordMap = new Dictionary<string, List<FrequencyWord>>();
             foreach (var inputWord in inputWordList)
             {
-                //       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
                 if (!wordMap.ContainsKey(inputWord.Word))
                 {
                     List<FrequencyWord> sameWordList = new List<FrequencyWord>();

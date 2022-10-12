@@ -21,3 +21,4 @@ inputWordList = wordListWithoutDuplicate;
 DescedingSortWordsByFrequency
 GenerateWordFrequencyGameResult
 ```
+5. Remove useless comments
