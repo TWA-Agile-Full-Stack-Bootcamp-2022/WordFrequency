@@ -11,13 +11,8 @@ namespace WordFrequency
 
         public string GetResult(string inputStr)
         {
-            var inputStrArr = SplitInputStrings(inputStr);
-            if (inputStrArr.Length == 1)
-            {
-                return inputStr + " 1";
-            }
-
-            List<Input> words = inputStrArr.GroupBy(s => s)
+            List<Input> words = SplitInputStrings(inputStr)
+                .GroupBy(s => s)
                 .Select(g => new Input(g.Key, g.Count()))
                 .OrderByDescending(g => g.WordCount)
                 .ToList();
