@@ -8,3 +8,4 @@
 /WordFrequencyTest/bin
 /WordFrequencyTest/obj
 .idea
+*.sln.DotSettings.user
