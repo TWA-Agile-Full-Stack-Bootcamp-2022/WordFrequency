@@ -7,6 +7,8 @@ namespace WordFrequency
 {
     public class WordFrequencyGame
     {
+        private const string WordSplitter = @"\s+";
+
         public string GetResult(string sentence)
         {
             var inputWords = ConvertInputStringToWordList(sentence);
@@ -38,7 +40,7 @@ namespace WordFrequency
 
         private List<FrequencyWord> ConvertInputStringToWordList(string sentence)
         {
-            var words = Regex.Split(sentence, @"\s+");
+            var words = Regex.Split(sentence, WordSplitter);
 
             return words.Select(word => new FrequencyWord(word, 1)).ToList();
         }
