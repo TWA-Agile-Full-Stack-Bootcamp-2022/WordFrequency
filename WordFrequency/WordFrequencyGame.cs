@@ -7,40 +7,40 @@ namespace WordFrequency
 {
     public class WordFrequencyGame
     {
-        public string GetResult(string inputStr)
+        public string GetResult(string sentence)
         {
-            var inputWordList = ConvertInputStringToWordList(inputStr);
+            var inputWords = ConvertInputStringToWordList(sentence);
 
-            var groupedWords = GroupFrequencyWords(inputWordList);
+            var groupedWords = GroupFrequencyWords(inputWords);
 
             var sortedWords = DescendingSortWordsByFrequency(groupedWords);
 
             return GenerateWordFrequencyGameResult(sortedWords);
         }
 
-        private string GenerateWordFrequencyGameResult(List<FrequencyWord> wordListWithoutDuplicate)
+        private string GenerateWordFrequencyGameResult(List<FrequencyWord> wordsWithoutDuplicate)
         {
-            return string.Join("\n", wordListWithoutDuplicate.Select(word => word.ToString()).ToArray());
+            return string.Join("\n", wordsWithoutDuplicate.Select(word => word.ToString()).ToArray());
         }
 
-        private List<FrequencyWord> DescendingSortWordsByFrequency(List<FrequencyWord> wordListWithoutDuplicate)
+        private List<FrequencyWord> DescendingSortWordsByFrequency(List<FrequencyWord> wordsWithoutDuplicate)
         {
-            wordListWithoutDuplicate.Sort((w1, w2) => w2.WordCount - w1.WordCount);
-            return wordListWithoutDuplicate;
+            wordsWithoutDuplicate.Sort((firstWord, secondWord) => secondWord.WordCount - firstWord.WordCount);
+            return wordsWithoutDuplicate;
         }
 
-        private List<FrequencyWord> GroupFrequencyWords(List<FrequencyWord> inputWordList)
+        private List<FrequencyWord> GroupFrequencyWords(List<FrequencyWord> words)
         {
-            return inputWordList.GroupBy(word => word.Word)
+            return words.GroupBy(word => word.Word)
                 .Select(group => new FrequencyWord(group.Key, group.Sum(word => word.WordCount)))
                 .ToList();
         }
 
-        private List<FrequencyWord> ConvertInputStringToWordList(string inputStr)
+        private List<FrequencyWord> ConvertInputStringToWordList(string sentence)
         {
-            var inputWords = Regex.Split(inputStr, @"\s+");
+            var words = Regex.Split(sentence, @"\s+");
 
-            return inputWords.Select(word => new FrequencyWord(word, 1)).ToList();
+            return words.Select(word => new FrequencyWord(word, 1)).ToList();
         }
     }
 }
