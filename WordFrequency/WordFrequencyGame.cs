@@ -18,12 +18,9 @@ namespace WordFrequency
             }
             else
             {
-                List<WordFrequency> wordFrequencyList = new List<WordFrequency>();
-                foreach (var word in words)
-                {
-                    WordFrequency wordFrequency = new WordFrequency(word, 1);
-                    wordFrequencyList.Add(wordFrequency);
-                }
+                List<WordFrequency> wordFrequencyList = words
+                    .Select(word => new WordFrequency(word, 1))
+                    .ToList();
 
                 //get the map for the next step of sizing the same word
                 Dictionary<string, List<WordFrequency>> map = GetListMap(wordFrequencyList);
