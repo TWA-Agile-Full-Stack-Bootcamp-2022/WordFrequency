@@ -19,13 +19,17 @@ namespace WordFrequency
             else
             {
                 List<WordFrequency> wordFrequencyList = BuildWordFrequencyList(words);
-
-                string[] wordFrequencyInfo = wordFrequencyList
-                    .Select(wordFrequency => wordFrequency.Word + " " + wordFrequency.Count)
-                    .ToArray();
+                string[] wordFrequencyInfo = GenerateWordFrequencyInfo(wordFrequencyList);
 
                 return string.Join("\n", wordFrequencyInfo);
             }
+        }
+
+        private static string[] GenerateWordFrequencyInfo(List<WordFrequency> wordFrequencyList)
+        {
+            return wordFrequencyList
+                .Select(wordFrequency => wordFrequency.Word + " " + wordFrequency.Count)
+                .ToArray();
         }
 
         private static List<WordFrequency> BuildWordFrequencyList(string[] words)
