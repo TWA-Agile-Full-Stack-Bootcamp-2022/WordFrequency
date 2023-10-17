@@ -20,14 +20,9 @@ namespace WordFrequency
             {
                 List<WordFrequency> wordFrequencyList = words
                                     .Select(word => new WordFrequency(word, 1))
+                                    .GroupBy(wordFrequency => wordFrequency.Word)
+                                    .Select(group => new WordFrequency(group.Key, group.Count()))
                                     .ToList();
-
-                List<WordFrequency> list = wordFrequencyList
-                    .GroupBy(wordFrequency => wordFrequency.Word)
-                    .Select(group => new WordFrequency(group.Key, group.Count()))
-                    .ToList();
-
-                wordFrequencyList = list;
 
                 wordFrequencyList.Sort((w1, w2) => w2.Count - w1.Count);
 
