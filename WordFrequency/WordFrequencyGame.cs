@@ -11,15 +11,13 @@ namespace WordFrequency
 
         public string GetResult(string inputStr)
         {
-            if (Regex.Split(inputStr, SPACE_DELIMITER).Length == 1)
+            string[] arr = Regex.Split(inputStr, SPACE_DELIMITER);
+            if (arr.Length == 1)
             {
                 return inputStr + " 1";
             }
             else
             {
-                //split the input string with 1 to n pieces of spaces
-                string[] arr = Regex.Split(inputStr, SPACE_DELIMITER);
-
                 List<Input> inputList = new List<Input>();
                 foreach (var s in arr)
                 {
