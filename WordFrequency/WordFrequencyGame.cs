@@ -25,14 +25,9 @@ namespace WordFrequency
                                     .OrderByDescending(word => word.Count)
                                     .ToList();
 
-                List<string> strList = new List<string>();
-
-                //stringJoiner joiner = new stringJoiner("\n");
-                foreach (WordFrequency w in wordFrequencyList)
-                {
-                    string s = w.Word + " " + w.Count;
-                    strList.Add(s);
-                }
+                List<string> strList = wordFrequencyList
+                    .Select(wordFrequency => wordFrequency.Word + " " + wordFrequency.Count)
+                    .ToList();
 
                 return string.Join("\n", strList.ToArray());
             }
