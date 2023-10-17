@@ -22,7 +22,6 @@ namespace WordFrequency
                                     .Select(word => new WordFrequency(word, 1))
                                     .ToList();
 
-                //get the map for the next step of sizing the same word
                 List<WordFrequency> list = wordFrequencyList
                     .GroupBy(wordFrequency => wordFrequency.Word)
                     .Select(group => new WordFrequency(group.Key, group.Count()))
@@ -43,27 +42,6 @@ namespace WordFrequency
 
                 return string.Join("\n", strList.ToArray());
             }
-        }
-
-        private Dictionary<string, List<WordFrequency>> GetListMap(List<WordFrequency> inputList)
-        {
-            Dictionary<string, List<WordFrequency>> map = new Dictionary<string, List<WordFrequency>>();
-            foreach (var input in inputList)
-            {
-                //       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-                if (!map.ContainsKey(input.Word))
-                {
-                    List<WordFrequency> arr = new List<WordFrequency>();
-                    arr.Add(input);
-                    map.Add(input.Word, arr);
-                }
-                else
-                {
-                    map[input.Word].Add(input);
-                }
-            }
-
-            return map;
         }
     }
 }
