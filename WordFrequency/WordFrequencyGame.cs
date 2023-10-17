@@ -25,11 +25,11 @@ namespace WordFrequency
                                     .OrderByDescending(word => word.Count)
                                     .ToList();
 
-                string[] strList = wordFrequencyList
+                string[] wordFrequencyInfo = wordFrequencyList
                     .Select(wordFrequency => wordFrequency.Word + " " + wordFrequency.Count)
                     .ToArray();
 
-                return string.Join("\n", strList);
+                return string.Join("\n", wordFrequencyInfo);
             }
         }
     }
