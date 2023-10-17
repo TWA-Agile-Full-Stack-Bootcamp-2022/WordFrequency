@@ -9,34 +9,27 @@ namespace WordFrequency
     {
         public string GetResult(string inputStr)
         {
-            if (Regex.Split(inputStr, @"\s+").Length == 1)
-            {
-                return inputStr + " 1";
-            }
-            else
-            {
-                //split the input string with 1 to n pieces of spaces
-                string[] words = Regex.Split(inputStr, @"\s+");
+            //split the input string with 1 to n pieces of spaces
+            string[] words = Regex.Split(inputStr, @"\s+");
 
-                Dictionary<string, int> wordFrequencyMap = new Dictionary<string, int>();
+            Dictionary<string, int> wordFrequencyMap = new Dictionary<string, int>();
 
-                foreach (var word in words)
+            foreach (var word in words)
+            {
+                if (!wordFrequencyMap.ContainsKey(word))
                 {
-                    if (!wordFrequencyMap.ContainsKey(word))
-                    {
-                        wordFrequencyMap.Add(word, 1);
-                    }
-                    else
-                    {
-                        wordFrequencyMap[word]++;
-                    }
+                    wordFrequencyMap.Add(word, 1);
                 }
-
-                var sortedWordFrequency = wordFrequencyMap.OrderByDescending(x => x.Value)
-                .Select(x => $"{x.Key} {x.Value}").ToArray();
-
-                return string.Join("\n", sortedWordFrequency);
+                else
+                {
+                    wordFrequencyMap[word]++;
+                }
             }
+
+            var sortedWordFrequency = wordFrequencyMap.OrderByDescending(x => x.Value)
+            .Select(x => $"{x.Key} {x.Value}").ToArray();
+
+            return string.Join("\n", sortedWordFrequency);
         }
     }
 }
