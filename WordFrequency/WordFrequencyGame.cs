@@ -19,18 +19,14 @@ namespace WordFrequency
             else
             {
                 List<WordFrequency> wordFrequencyList = words
-                    .Select(word => new WordFrequency(word, 1))
-                    .ToList();
+                                    .Select(word => new WordFrequency(word, 1))
+                                    .ToList();
 
                 //get the map for the next step of sizing the same word
-                Dictionary<string, List<WordFrequency>> map = GetListMap(wordFrequencyList);
-
-                List<WordFrequency> list = new List<WordFrequency>();
-                foreach (var entry in map)
-                {
-                    WordFrequency input = new WordFrequency(entry.Key, entry.Value.Count);
-                    list.Add(input);
-                }
+                List<WordFrequency> list = wordFrequencyList
+                    .GroupBy(wordFrequency => wordFrequency.Word)
+                    .Select(group => new WordFrequency(group.Key, group.Count()))
+                    .ToList();
 
                 wordFrequencyList = list;
 
