@@ -22,9 +22,8 @@ namespace WordFrequency
                                     .Select(word => new WordFrequency(word, 1))
                                     .GroupBy(wordFrequency => wordFrequency.Word)
                                     .Select(group => new WordFrequency(group.Key, group.Count()))
+                                    .OrderByDescending(word => word.Count)
                                     .ToList();
-
-                wordFrequencyList.Sort((w1, w2) => w2.Count - w1.Count);
 
                 List<string> strList = new List<string>();
 
