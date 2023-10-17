@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace WordFrequency
 {
     public class WordFrequencyGame
     {
+        private const string SPACE_DELIMITER = @"\s+";
+
         public string GetResult(string inputStr)
         {
-            if (Regex.Split(inputStr, @"\s+").Length == 1)
+            if (Regex.Split(inputStr, SPACE_DELIMITER).Length == 1)
             {
                 return inputStr + " 1";
             }
             else
             {
                 //split the input string with 1 to n pieces of spaces
-                string[] arr = Regex.Split(inputStr, @"\s+");
+                string[] arr = Regex.Split(inputStr, SPACE_DELIMITER);
 
                 List<Input> inputList = new List<Input>();
                 foreach (var s in arr)
