@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -12,17 +11,11 @@ namespace WordFrequency
         public string GetResult(string sentence)
         {
             string[] words = Regex.Split(sentence, SPACE_DELIMITER);
-            if (words.Length == 1)
-            {
-                return sentence + " 1";
-            }
-            else
-            {
-                List<WordFrequency> wordFrequencyList = BuildWordFrequencyList(words);
-                string[] wordFrequencyInfo = GenerateWordFrequencyInfo(wordFrequencyList);
 
-                return string.Join("\n", wordFrequencyInfo);
-            }
+            List<WordFrequency> wordFrequencyList = BuildWordFrequencyList(words);
+            string[] wordFrequencyInfo = GenerateWordFrequencyInfo(wordFrequencyList);
+
+            return string.Join("\n", wordFrequencyInfo);
         }
 
         private static string[] GenerateWordFrequencyInfo(List<WordFrequency> wordFrequencyList)
