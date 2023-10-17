@@ -18,15 +18,15 @@ namespace WordFrequency
             }
             else
             {
-                List<WordFrequency> inputList = new List<WordFrequency>();
+                List<WordFrequency> wordFrequencyList = new List<WordFrequency>();
                 foreach (var word in words)
                 {
-                    WordFrequency input = new WordFrequency(word, 1);
-                    inputList.Add(input);
+                    WordFrequency wordFrequency = new WordFrequency(word, 1);
+                    wordFrequencyList.Add(wordFrequency);
                 }
 
                 //get the map for the next step of sizing the same word
-                Dictionary<string, List<WordFrequency>> map = GetListMap(inputList);
+                Dictionary<string, List<WordFrequency>> map = GetListMap(wordFrequencyList);
 
                 List<WordFrequency> list = new List<WordFrequency>();
                 foreach (var entry in map)
@@ -35,14 +35,14 @@ namespace WordFrequency
                     list.Add(input);
                 }
 
-                inputList = list;
+                wordFrequencyList = list;
 
-                inputList.Sort((w1, w2) => w2.Count - w1.Count);
+                wordFrequencyList.Sort((w1, w2) => w2.Count - w1.Count);
 
                 List<string> strList = new List<string>();
 
                 //stringJoiner joiner = new stringJoiner("\n");
-                foreach (WordFrequency w in inputList)
+                foreach (WordFrequency w in wordFrequencyList)
                 {
                     string s = w.Word + " " + w.Count;
                     strList.Add(s);
