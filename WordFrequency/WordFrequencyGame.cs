@@ -9,19 +9,19 @@ namespace WordFrequency
     {
         private const string SPACE_DELIMITER = @"\s+";
 
-        public string GetResult(string inputStr)
+        public string GetResult(string sentence)
         {
-            string[] arr = Regex.Split(inputStr, SPACE_DELIMITER);
-            if (arr.Length == 1)
+            string[] words = Regex.Split(sentence, SPACE_DELIMITER);
+            if (words.Length == 1)
             {
-                return inputStr + " 1";
+                return sentence + " 1";
             }
             else
             {
                 List<Input> inputList = new List<Input>();
-                foreach (var s in arr)
+                foreach (var word in words)
                 {
-                    Input input = new Input(s, 1);
+                    Input input = new Input(word, 1);
                     inputList.Add(input);
                 }
 
