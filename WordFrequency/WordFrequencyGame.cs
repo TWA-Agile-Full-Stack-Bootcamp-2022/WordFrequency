@@ -6,70 +6,40 @@ namespace WordFrequency
 {
     public class WordFrequencyGame
     {
-        public string GetResult(string inputStr)
+        private const string SPACE = @"\s+";
+
+        public string CountWords(string inputStr)
         {
-            if (Regex.Split(inputStr, @"\s+").Length == 1)
-            {
-                return inputStr + " 1";
-            }
-            else
-            {
-                //split the input string with 1 to n pieces of spaces
-                string[] arr = Regex.Split(inputStr, @"\s+");
-
-                List<Input> inputList = new List<Input>();
-                foreach (var s in arr)
-                {
-                    Input input = new Input(s, 1);
-                    inputList.Add(input);
-                }
-
-                //get the map for the next step of sizing the same word
-                Dictionary<string, List<Input>> map = GetListMap(inputList);
-
-                List<Input> list = new List<Input>();
-                foreach (var entry in map)
-                {
-                    Input input = new Input(entry.Key, entry.Value.Count);
-                    list.Add(input);
-                }
-
-                inputList = list;
-
-                inputList.Sort((w1, w2) => w2.WordCount - w1.WordCount);
-
-                List<string> strList = new List<string>();
-
-                //stringJoiner joiner = new stringJoiner("\n");
-                foreach (Input w in inputList)
-                {
-                    string s = w.Value + " " + w.WordCount;
-                    strList.Add(s);
-                }
-
-                return string.Join("\n", strList.ToArray());
-            }
+            List<WordCount> resultWordCountList = ToWordCountList(inputStr);
+            resultWordCountList.Sort((w1, w2) => w2.Count - w1.Count);
+            List<string> strList = new List<string>();
+            resultWordCountList.ForEach(w => strList.Add(w.Word + " " + w.Count));
+            return string.Join("\n", strList.ToArray());
         }
 
-        private Dictionary<string, List<Input>> GetListMap(List<Input> inputList)
+        private List<WordCount> ToWordCountList(string inputStr)
         {
-            Dictionary<string, List<Input>> map = new Dictionary<string, List<Input>>();
-            foreach (var input in inputList)
+            string[] words = Regex.Split(inputStr, SPACE);
+            Dictionary<string, int> dictionary = new Dictionary<string, int>();
+            foreach (var word in words)
             {
-                //       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-                if (!map.ContainsKey(input.Value))
+                if (dictionary.TryGetValue(word, out int count))
                 {
-                    List<Input> arr = new List<Input>();
-                    arr.Add(input);
-                    map.Add(input.Value, arr);
+                    dictionary[word] = count+1;
                 }
                 else
                 {
-                    map[input.Value].Add(input);
+                    dictionary.Add(word, 1);
                 }
             }
 
-            return map;
+            List<WordCount> wordCounts = new List<WordCount>();
+            foreach (var entry in dictionary)
+            {
+                wordCounts.Add(new WordCount(entry.Key, entry.Value));
+            }
+
+            return wordCounts;
         }
     }
 }
