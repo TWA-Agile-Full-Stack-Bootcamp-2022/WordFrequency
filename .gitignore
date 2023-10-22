@@ -7,4 +7,7 @@
 /WordFrequency/obj
 /WordFrequencyTest/bin
 /WordFrequencyTest/obj
-.idea
+
+/coveragereport
+
+TestResults
